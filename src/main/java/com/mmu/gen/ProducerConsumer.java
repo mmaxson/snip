@@ -8,52 +8,53 @@ import java.util.logging.Logger;
 /**
  * Created by mu on 7/14/17.
  */
-public class ProducerConsumer {
+public class ProducerConsumer<T> {
 
-    class Producer implements Runnable {
+    class MyProducer<T> implements Runnable {
 
-        private final BlockingQueue sharedQueue;
+        private final BlockingQueue<T> queue;
 
-        public Producer(BlockingQueue sharedQueue) {
-            this.sharedQueue = sharedQueue;
+        public MyProducer(BlockingQueue<T> queue) {
+            this.queue = queue;
         }
 
         public void run() {
             for(int i=0; i<10; i++){
                 try {
                     System.out.println("Produced: " + i);
-                    sharedQueue.put(i);
+                    queue.put( (T) new Integer(i));
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MyProducer.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
     }
 
-    class Consumer implements Runnable{
 
-        private final BlockingQueue sharedQueue;
+    class MyConsumer<T> implements Runnable{
 
-        public Consumer (BlockingQueue sharedQueue) {
-            this.sharedQueue = sharedQueue;
+        private final BlockingQueue<T> queue;
+
+        public MyConsumer (BlockingQueue<T> queue) {
+            this.queue = queue;
         }
 
         public void run() {
             while(true){
                 try {
-                    System.out.println("Consumed: "+ sharedQueue.take());
+                    System.out.println("Consumed: "+ queue.take());
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MyConsumer.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
     }
 
     public void startWork(){
-        BlockingQueue sharedQueue = new LinkedBlockingQueue();
+        BlockingQueue<String> sharedQueue = new LinkedBlockingQueue<String>();
 
-        Thread prodThread = new Thread(new Producer(sharedQueue));
-        Thread consThread = new Thread(new Consumer(sharedQueue));
+        Thread prodThread = new Thread(new MyProducer(sharedQueue));
+        Thread consThread = new Thread(new MyConsumer(sharedQueue));
 
         prodThread.start();
         consThread.start();
