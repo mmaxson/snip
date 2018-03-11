@@ -15,13 +15,10 @@ public class CircularArrayBlockingQueue<E> implements MyQueue<E> {
         this.storage= new Object[capacity];
     }
 
-    public void enqueue(E element) {
+    public synchronized void enqueue(E element) throws InterruptedException {
 
         while (isFull()) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-            }
+            wait();
         }
 
         if (isEmpty()) {
@@ -33,14 +30,10 @@ public class CircularArrayBlockingQueue<E> implements MyQueue<E> {
         front = (front + 1) % capacity;
     }
 
-    public E dequeue() {
+    public synchronized E dequeue() throws InterruptedException{
 
         while (isEmpty()) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-
-            }
+            wait();
         }
 
         if (isFull()) {
