@@ -7,7 +7,7 @@ import com.mmu.gen.inter.MyQueue;
  */
 public class CircularArrayBlockingQueue<E> implements MyQueue<E> {
     private final int capacity;
-    private int front,rear, current;
+    private int front, rear, current;
     private Object[] storage;
 
     public CircularArrayBlockingQueue(int capacity){
