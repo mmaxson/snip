@@ -30,7 +30,7 @@ public class ReadWriteLock {
         writers++;
     }
 
-    public synchronized void unlockWrite() throws InterruptedException {
+    public synchronized void unlockWrite() {
         writers--;
         notifyAll();
     }

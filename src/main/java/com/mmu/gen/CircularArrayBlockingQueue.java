@@ -7,7 +7,7 @@ import com.mmu.gen.inter.MyQueue;
  */
 public class CircularArrayBlockingQueue<E> implements MyQueue<E> {
     private final int capacity;
-    private int front, rear, current;
+    private int front, rear, numberOfElements;
     private Object[] storage;
 
     public CircularArrayBlockingQueue(int capacity){
@@ -25,7 +25,7 @@ public class CircularArrayBlockingQueue<E> implements MyQueue<E> {
             notifyAll();
         }
 
-        current++;
+        numberOfElements++;
         storage[front] = element;
         front = (front + 1) % capacity;
     }
@@ -40,7 +40,7 @@ public class CircularArrayBlockingQueue<E> implements MyQueue<E> {
             notifyAll();
         }
 
-        current--;
+        numberOfElements--;
 
         E temp = (E) storage[rear];
         storage[rear] = null;
@@ -50,10 +50,10 @@ public class CircularArrayBlockingQueue<E> implements MyQueue<E> {
     }
 
     public boolean isFull(){
-        return current == capacity;
+        return numberOfElements == capacity;
     }
 
     public boolean isEmpty(){
-        return current==0;
+        return numberOfElements ==0;
     }
 }

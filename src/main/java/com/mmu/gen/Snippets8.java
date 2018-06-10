@@ -1,5 +1,7 @@
 package com.mmu.gen;
 
+import com.mmu.model.Person;
+
 import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -37,6 +39,14 @@ public class Snippets8 {
                 .collect(Collectors.toList());
     }
 
+
+    private static int getTotalAge(List<Person> persons){
+        return persons.stream().mapToInt(Person::getAge).sum();
+    }
+
+    private static void skipnLimit(int[] a, int skip, int limit ){
+        Arrays.stream(a).skip(skip).limit(limit).forEach(System.out::println);
+    }
     public static void main(String[] args) {
 
 
@@ -48,7 +58,7 @@ public class Snippets8 {
        // Snippets.stringArrayToFlatMap(data).forEach(System.out::println);
 
     //    Snippets.listToMap(Arrays.asList("Visa","Master","Master", "Visa", "Express")).entrySet().forEach(System.out::println);
-        Integer [][] twoDArray = {
+      /*  Integer [][] twoDArray = {
                 {1,  2,  3,  4,  40},
                 {5,  6,  7,  8,  50},
                 {9,  10, 11, 12, 60},
@@ -57,8 +67,11 @@ public class Snippets8 {
                 {21, 22, 23, 24, 90},
                 {25, 26, 27, 28, 100},
                 {29, 30, 31, 32, 110},
-                {33, 34, 35, 36, 120}};
+                {33, 34, 35, 36, 120}};*/
 
-        Snippets8.twoDimArrayToList( twoDArray ).forEach(System.out::println);
+      //  Snippets8.twoDimArrayToList( twoDArray ).forEach(System.out::println);
+        Snippets8.skipnLimit(new int[]{1,2,3,4,5}, 2, 2);
     }
+
+
 }
